@@ -8,6 +8,8 @@ public class ScoreManager : Singleton<ScoreManager>
    private int _playerScore, _AIScore;
    public int playerCardNumber, AICardNumber;
 
+   [SerializeField] private TextMeshProUGUI[] txtPlayerScore, txtAIScore;
+
    private int PlayerScore
    {
       get => _playerScore;
@@ -15,7 +17,10 @@ public class ScoreManager : Singleton<ScoreManager>
       set
       {
          _playerScore = value;
-         txtPlayerScore.text = "Player Score :" + _playerScore;
+         foreach (TextMeshProUGUI txt in txtPlayerScore)
+         {
+            txt.text = "Player Score : " + _playerScore;
+         }
       }
    }
    
@@ -26,10 +31,12 @@ public class ScoreManager : Singleton<ScoreManager>
       set
       {
          _AIScore = value;
-         txtAIScore.text = "AI Score :" + _AIScore;
+         foreach (TextMeshProUGUI txt in txtAIScore)
+         {
+            txt.text = "AI Score : " + _AIScore;
+         }
       }
    }
-   [SerializeField] private TextMeshProUGUI txtPlayerScore, txtAIScore;
 
    
    public void Pishti(bool isPlayer)

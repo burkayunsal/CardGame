@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ public class CardManager : Singleton<CardManager>
 {
     [SerializeField] private Transform tableSlot;
     [SerializeField] private List<Transform> playerSlots;
+    [SerializeField] private TextMeshProUGUI txtCardsLeft;
     
     private List<List<Card>> playersHoldings = new List<List<Card>>();
     public Queue<Card> _availableCards = new();
@@ -55,6 +57,7 @@ public class CardManager : Singleton<CardManager>
                 playersHoldings[i].Add(_availableCards.Dequeue());
         }
 
+        txtCardsLeft.text = _availableCards.Count.ToString("00");
         StartCoroutine(DrawCards());
         
         PlayerController.I.SetPlayer();

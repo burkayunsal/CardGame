@@ -19,41 +19,57 @@ public class AIController : Singleton<AIController>
     
     private IEnumerator Play()
     {
-        yield return new WaitForSeconds(0.75f);
         if (TurnManager.I.activeTurn == Turn.AI)
         {
-            Card card = ChooseCard();
+            yield return new WaitForSeconds(0.75f);
             
-            if (lsAICards.Contains(card))
-            {
-                lsAICards.Remove(card);
-                CardManager.I.OnPlayerUsesCard(1, card);
+            Card card = ChooseCard();
+            lsAICards.Remove(card);
+            CardManager.I.OnPlayerUsesCard(1, card);
 
-                if (lsAICards.Count == 0)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    CardManager.I.CheckGameEnd();
-                }
+            if (lsAICards.Count == 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+                CardManager.I.CheckGameEnd();
             }
+            
         }
     }
     
 
     Card ChooseCard()
     {
-        if (CardChecker.I.TopCard != null)
+        Card topCard = CardChecker.I.TopCard;
+        if (topCard != null)
         {
             foreach (Card card in lsAICards)
             {
-                if (card.value == CardChecker.I.TopCard.value)
+                if (card.value == topCard.value)
                 {
                     return card;
                 }
             }
         }
+        else
+        {
+            return ReturnRandomCardExceptJack();
+            
+        }
         return lsAICards[Random.Range(0, lsAICards.Count)];
     }
 
+    Card ReturnRandomCardExceptJack()
+    {
+        Card card;
+        do
+        {
+            card = lsAICards[Random.Range(0, lsAICards.Count)];
+        }
+        while (card.value == CardValue.Jack);
+
+        return card;
+    }
+    
     public void TakeCards(Queue<Card> cards)
     {
         foreach (Card card in cards)
