@@ -1,6 +1,10 @@
 
 public static class Configs
 {
+    public static class Game
+    {
+        public static int PishtiPoint = 2;
+    }
     public static class Card
     {
         public static int cardTypeNumber = 4;

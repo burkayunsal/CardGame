@@ -44,13 +44,12 @@ public class ScoreManager : Singleton<ScoreManager>
       if (isPlayer)
       {
          PlayerScore += 10;
-         playerCardNumber += 2;
+         AddCard(true,Configs.Game.PishtiPoint);
       }
       else
       {
          AIScore += 10;
-         AICardNumber += 2;
-
+         AddCard(false,Configs.Game.PishtiPoint);
       }
    }
 
@@ -95,7 +94,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
    IEnumerator CheckWhoWins()
    {
-      yield return new WaitForSeconds(1f);
+      yield return new WaitForSeconds(2f);
       
       if (PlayerScore > AIScore)
       {

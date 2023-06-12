@@ -127,6 +127,14 @@ public class CardManager : Singleton<CardManager>
     {
         if (_availableCards.Count == 0)
         {
+            if (CardChecker.I.isLastTakerPlayer)
+            {
+                CardChecker.I.MoveCardsToLastTaker(true,tableCards);
+            }
+            else
+            {
+                CardChecker.I.MoveCardsToLastTaker(false,tableCards);
+            }
             ScoreManager.I.OnLevelEnd();
         }
         else
